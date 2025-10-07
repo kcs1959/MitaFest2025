@@ -1,0 +1,21 @@
+name: Enforce develop -> main
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Allow only develop as PR source
+        run: |
+          SRC="${{ github.head_ref }}"
+          echo "source branch: $SRC"
+          if [ "$SRC" != "develop" ]; then
+            echo "::error::Only PRs from 'develop' can be merged into main."
+            exit 1
+          fi
