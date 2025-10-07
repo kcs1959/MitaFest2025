@@ -1,24 +1,40 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - "**"
   pull_request:
+    branches: [main, develop]
+  push:
+    branches: ["**"]
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Skip duplicated run on push when an open PR exists
+        if: github.event_name == 'push'
+        id: prcheck
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const branch = context.ref.replace('refs/heads/','');
+            const head = `${owner}:${branch}`;
+            const res = await github.rest.pulls.list({ owner, repo, state: 'open', head });
+            const hasPR = res.data.length > 0;
+            core.info(`branch=${branch}, openPR=${hasPR}`);
+            if (hasPR) {
+              core.notice('Open PR exists for this branch. Skip push CI to avoid duplicate with pull_request.');
+              process.exit(0); // ここで正常終了
+            }
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
