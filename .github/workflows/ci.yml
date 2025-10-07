@@ -15,32 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  pr-gate:
-    runs-on: ubuntu-latest
-    outputs:
-      has_pr: ${{ steps.prcheck.outputs.hasPR }}
-    steps:
-      - name: Detect open PR for this branch (push only)
-        if: github.event_name == 'push'
-        id: prcheck
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const branch = context.ref.replace('refs/heads/','');
-            const head = `${owner}:${branch}`;
-            const res = await github.rest.pulls.list({ owner, repo, state: 'open', head });
-            const hasPR = res.data.length > 0;
-            core.info(`branch=${branch}, openPR=${hasPR}`);
-            core.setOutput('hasPR', hasPR ? 'true' : 'false');
-      - name: No-op for pull_request
-        if: github.event_name == 'pull_request'
-        run: echo "PR event; gate is noop"
-
   build-and-test:
-    needs: pr-gate
-    # pushかつ“このブランチにオープンPRあり”ならジョブ丸ごとスキップ
-    if: ${{ !(github.event_name == 'push' && needs.pr-gate.outputs.has_pr == 'true') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
