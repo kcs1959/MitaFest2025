@@ -6,7 +6,7 @@ import "@/app/styles/globals.css";
 const notoSansJp = Noto_Sans_JP({
   weight: ["400", "700"],
   preload: false,
-  variable: "--font-note-sans-jp",
+  variable: "--font-noto-sans-jp",
   display: "swap",
 });
 
