@@ -1,14 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import { Noto_Sans_JP } from "next/font/google";
 import "@/app/styles/globals.css";
-
-const notoSansJp = Noto_Sans_JP({
-  weight: ["400", "700"],
-  preload: false,
-  variable: "--font-noto-sans-jp",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "KCS ExVision 2025 – 触れて、遊んで、作ってみるコンピュータの世界",
@@ -44,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className={notoSansJp.variable}>
+      <body>
         <div className="site">
           <header className="site-header">
             <p className="site-title">KCS ExVision 2025</p>
