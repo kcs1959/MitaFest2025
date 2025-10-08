@@ -1,7 +1,6 @@
 :root {
   --default-font-jp:
-    "Noto Sans JP", "Noto Sans CJK JP", var(--font-noto-sans-jp), "Hiragino Sans", "Yu Gothic UI",
-    "Meiryo", sans-serif;
+    "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
   --color-background: #ffffff;
   --color-surface: #f2f2f2;
   --color-text: #111111;
