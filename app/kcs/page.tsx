@@ -3,11 +3,13 @@ import Container from "@/app/components/Container";
 import MainContent from "@/app/components/MainContent";
 
 const GROUPS = [
-  "AI・データ：生成AIや機械学習の研究と応用",
-  "Web・ネットワーク：Next.jsやWebGL、IoT連携",
-  "ゲーム制作：Unityや自作エンジンでの開発",
-  "低レイヤ・セキュリティ：自作OS、コンパイラ、CTF",
-  "CG・サウンド：BlenderやDTMによる表現制作",
+  "AI：AIの基礎の学習、pytorchとkaggleの勉強会",
+  "Web：Next.jsとtypeScriptを用いたWebアプリ開発",
+  "ゲーム制作： UnityやUnreal Engineでのゲーム開発",
+  "システム：自作OS、自作コンパイラ、CTFなど",
+  "3DCG：Blenderによる3Dモデリング",
+  "音楽：DAWを用いた音楽制作(DTM)",
+  "競プロ：AtCoderを中心とした競技プログラミング",
 ] as const;
 
 const CHANNELS = [
